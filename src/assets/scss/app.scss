@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap');
+
+@import "variables";
+@import "bootstrap";
+
+.popover {
+	border: 0;
+	box-shadow: 0 3px 3px rgba(black, .15);
+
+	.popover-header {
+		@extend .text-white, .d-flex, .align-items-center, .py-0, .px-3;
+
+		background: #68aad2 linear-gradient(transparent, rgba(black, .1));
+		text-shadow: 0 2px 0 rgba(black, .15);
+		font-size: 1rem;
+		height: 46px;
+		box-shadow: none;
+	}
+
+	.popover-body {
+		@extend .p-2;
+
+		font-size: .85rem;
+		font-family: 'Nunito', sans-serif;
+	}
+
+	.popover-arrow {
+		&::after {
+			filter: drop-shadow(0 3px 3px rgba(black, .15));
+		}
+
+		&::before {
+			display: none;
+		}
+	}
+}
+
+@keyframes clouds {
+	0% {
+		background-position: -3578px bottom;
+	}
+
+	100% {
+		background-position: 3578px bottom;
+	}
+}
