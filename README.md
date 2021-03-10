@@ -1,4 +1,7 @@
-# frontend
+# HabbPlus
+
+Design for a client.
+Created with Vue.js intended to consume a Rest API, also created by me in Laravel 8.
 
 ## Project setup
 ```
