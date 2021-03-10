@@ -1,20 +1,25 @@
 <template>
-	<SlideBox title="Today" :prev="prev" :next="next">
+	<SlideBox :title="positionAsKey ? parseDate(positionAsKey) : 'Today'" :prev="prev" :next="next" :disabled="{ prev: current < 0, next: current + 1 >= keys.length }">
 		<div class="events">
-			<router-link
-				:to="{ name: 'show ' + animation.category, params: { id: animation.target } }"
-				class="event-item" v-for="animation in animations" v-bind:key="'animation-' + animation.id"
-			>
-				<div class="event-time">
-					<span>{{ animation.startAt }}</span>
-					<span>{{ animation.finishAt }}</span>
-				</div>
+			
+			<template v-if="animations">
+				<router-link
+					:to="{ name: 'show ' + animation.category, params: { id: animation.target } }"
+					class="event-item" v-for="animation in animations" :key="'animation-' + animation.id"
+				>
+					<div class="event-time">
+						<span>{{ animation.startAt }}</span>
+						<span>{{ animation.finishAt }}</span>
+					</div>
 
-				<div class="event-info">
-					<span class="event-name">{{ animation.name }}</span>
-					<span class="event-target">{{ capitalize(animation.category) }}</span>
-				</div>
-			</router-link>
+					<div class="event-info">
+						<span class="event-name">{{ animation.name }}</span>
+						<span class="event-target">{{ capitalize(animation.category) }}</span>
+					</div>
+				</router-link>
+			</template>
+
+			<Alert message="There is no entertainment planned for this day." key="no-events" v-else />
 		</div>
 	</SlideBox>
 </template>
@@ -75,17 +80,21 @@
 
 <script>
 import { capitalize } from 'lodash'
+import moment from 'moment'
+
+import Alert from '@/components/Alert'
 import SlideBox from '@/components/SlideBox'
 
 export default {
 	components: {
+		Alert,
 		SlideBox,
 	},
 
 	data() {
 		return {
 			events: [],
-			current: 'today'
+			current: -1
 		}
 	},
 
@@ -106,17 +115,39 @@ export default {
 		},
 
 		prev() {
-			console.log('prev')
+			if (this.current == -1) return
+			
+			// current position -1
+			this.current -= 1
 		},
 
 		next() {
-			console.log('next')
+			if (this.current >= this.keys.length) return
+			
+			// current position +1
+			this.current += 1
+		},
+
+		parseDate(string) {
+			moment.locale('fr')
+
+			return moment(string, 'DD-MM-YYYY').format('DD, MMM YYYY')
 		}
 	},
 
 	computed: {
 		animations() {
-			return this.events[ this.current ]
+			return this.events[
+				this.positionAsKey || 'today'
+			]
+		},
+
+		keys() {
+			return Object.keys(this.events)
+		},
+		
+		positionAsKey() {
+			return this.keys[ this.current ]
 		}
 	}
 }

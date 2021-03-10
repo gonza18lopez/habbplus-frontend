@@ -1,7 +1,7 @@
 <template>
 	<FeatureBox :variant="variant" nopadding>
 		<template v-slot:title>
-			<div class="arrow" @click="prev">
+			<div class="arrow" @click="prev" :class="{ disabled: disabled.prev}">
 				<fa :icon="['fas', 'angle-left']" />
 			</div>
 
@@ -9,7 +9,7 @@
 				{{ title }}
 			</div>
 
-			<div class="arrow" @click="next">
+			<div class="arrow" @click="next" :class="{ disabled: disabled.next}">
 				<fa :icon="['fas', 'angle-right']" />
 			</div>
 		</template>
@@ -33,6 +33,11 @@
 
 			cursor: pointer;
 			height: 43px;
+
+			&.disabled {
+				opacity: .5;
+				pointer-events: none;
+			}
 
 			svg {
 				filter: drop-shadow(0 1px 0 rgba(black, .2));
@@ -67,7 +72,17 @@ export default {
 		title: String,
 
 		prev: Function,
-		next: Function
+		next: Function,
+
+		disabled: {
+			type: Object,
+			default() {
+				return {
+					prev: false,
+					next: false
+				}
+			}
+		}
 	},
 
 	components: {

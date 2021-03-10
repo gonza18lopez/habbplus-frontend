@@ -44,3 +44,11 @@
 		background-position: 3578px bottom;
 	}
 }
+
+.mode-fade-enter-active, .mode-fade-leave-active {
+	transition: opacity .5s ease
+}
+
+.mode-fade-enter-from, .mode-fade-leave-to {
+	opacity: 0
+}
