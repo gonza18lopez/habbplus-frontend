@@ -1,7 +1,8 @@
 # HabbPlus
 
-Design for a client.
-Created with Vue.js intended to consume a Rest API, also created by me in Laravel 8.
+Design for a client.\n
+Created with Vue.js intended to consume a Rest API, also created by me in Laravel 8.\n
+The idea of the project is to implement Vuex to store authenticated user data, in the next few days.
 
 ## Project setup
 ```
